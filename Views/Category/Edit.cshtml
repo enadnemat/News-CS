@@ -1,12 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Create Category";
+    ViewData["Title"] = "Edit Category";
 }
 @model Category
 
-<form method="post" id="SubmitForm"> 
+<form method="post" id="SubmitForm">
     <div class="border p-3 mt-4 ">
         <div class="row pb-2">
-            <h2 >Create Category</h2>
+            <h2>Update Category</h2>
             <hr />
         </div>
         <div class="mb-3 row p-1">
@@ -22,15 +22,15 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <button class="btn btn-primary form-control" >Create</button>
+                <button class="btn btn-primary form-control">Update</button>
             </div>
             <div class="col-6">
                 <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary form-control"> Category List</a>
             </div>
         </div>
-    </div>        
+    </div>
 </form>
-@section Scripts{
+@section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
     }

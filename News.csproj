@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\News.DataAccess.csproj" />
     <ProjectReference Include="..\Models\News.Models.csproj" />
+    <ProjectReference Include="..\News.Services\News.Services.csproj" />
     <ProjectReference Include="..\Utility\News.Utility.csproj" />
   </ItemGroup>
 

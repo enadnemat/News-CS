@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using News.Data;
+using News.DataAccess.Data;
+using News.DataAccess.Repository;
+using News.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDBContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
 
 
 var app = builder.Build();

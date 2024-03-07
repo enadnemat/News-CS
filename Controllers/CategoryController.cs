@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using News.Data;
+using News.DataAccess.Data;
+using News.DataAccess.Repository.IRepository;
 using News.Models;
 
 namespace News.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDBContext _db;  
-        public CategoryController(ApplicationDBContext bd)
+        private readonly ICategoryRepository _category;
+        public CategoryController(ICategoryRepository bd)
         {
-            _db = bd;
+            _category = bd;
         }
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
-            return View(objCategoryList);
+                List<Category> objCategoryList = _category.GetAll().ToList();
+                return View(objCategoryList);
         }
 
         public IActionResult Create ()
@@ -28,8 +29,8 @@ namespace News.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _category.Add(obj);
+                _category.Save();
                 TempData["success"] = "Category has been created successfully";
                 return RedirectToAction("Index");
             }
@@ -42,7 +43,7 @@ namespace News.Controllers
             { 
                 return NotFound();
             }
-            Category? category = _db.Categories.Find(id);
+            Category? category = _category.Get(u => u.Id == id);
            // Category? category2 = _db.Categories.FirstOrDefault(c => c.Id == id);
            // Category? category3 = _db.Categories.Where(c => c.Id == id).FirstOrDefault();
 
@@ -58,8 +59,8 @@ namespace News.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _category.Update(obj);
+                _category.Save();
                 TempData["success"] = "Category has been updated successfully";
 
                 return RedirectToAction("Index");
@@ -73,8 +74,8 @@ namespace News.Controllers
             {
                 return NotFound();
             }
-            Category? category = _db.Categories.Find(id);
-    
+            Category? category = _category.Get(u=> u.Id == id);
+     
 
             if (category == null)
             {
@@ -86,15 +87,15 @@ namespace News.Controllers
         [HttpPost,ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? category = _db.Categories.Find(id);
+            Category? category = _category.Get(u => u.Id == id);
 
             if (category == null)
             {
                 return NotFound();
-            }   
+            }
 
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
+            _category.Delete(category);
+            _category.Save();
             TempData["success"] = "Category has been deleted successfully";
 
             return RedirectToAction("Index");
